@@ -1,3 +1,4 @@
 [submodule "cores/arduino/TinyUSB/Adafruit_TinyUSB_ArduinoCore"]
 	path = cores/arduino/TinyUSB/Adafruit_TinyUSB_ArduinoCore
-	url = https://github.com/steves2j/Adafruit_TinyUSB_ArduinoCore.git#S2J_LPWDM0
+	url = https://github.com/steves2j/Adafruit_TinyUSB_ArduinoCore.git
+    branch = S2J_LPWDM0
