@@ -34,6 +34,7 @@
 // Other SERCOM peripherals always use the 48 MHz clock
 #define SERCOM_FREQ_REF       48000000ul
 #define SERCOM_NVIC_PRIORITY  ((1<<__NVIC_PRIO_BITS) - 1)
+#define SERCOM_DEFAULT_I2C_OPERATION_TIMEOUT_MS 1000
 
 typedef enum
 {
@@ -214,10 +215,10 @@ class SERCOM
 
 		void resetWIRE( void ) ;
 		void enableWIRE( void ) ;
-    void disableWIRE( void );
-    void prepareNackBitWIRE( void ) ;
-    void prepareAckBitWIRE( void ) ;
-    void prepareCommandBitsWire(uint8_t cmd);
+		void disableWIRE( void );
+		void prepareNackBitWIRE( void ) ;
+		void prepareAckBitWIRE( void ) ;
+		void prepareCommandBitsWire(uint8_t cmd);
 		bool startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag) ;
 		bool sendDataMasterWIRE(uint8_t data) ;
 		bool sendDataSlaveWIRE(uint8_t data) ;
@@ -225,7 +226,6 @@ class SERCOM
 		bool isSlaveWIRE( void ) ;
 		bool isBusIdleWIRE( void ) ;
 		bool isBusOwnerWIRE( void ) ;
-		bool isBusUnknownWIRE( void ) ;
 		bool isArbLostWIRE( void );
 		bool isBusBusyWIRE( void );
 		bool isDataReadyWIRE( void ) ;
@@ -233,9 +233,11 @@ class SERCOM
 		bool isRestartDetectedWIRE( void ) ;
 		bool isAddressMatch( void ) ;
 		bool isMasterReadOperationWIRE( void ) ;
-    bool isRXNackReceivedWIRE( void ) ;
+		bool isRXNackReceivedWIRE( void ) ;
 		int availableWIRE( void ) ;
 		uint8_t readDataWIRE( void ) ;
+		void setTimeout( uint16_t ms );
+		bool didTimeout( void );
 		int8_t getSercomIndex(void);
 #if defined(__SAMD51__)
 		// SERCOM clock source override is only available on
@@ -262,6 +264,15 @@ class SERCOM
 		uint8_t calculateBaudrateSynchronous(uint32_t baudrate);
 		uint32_t division(uint32_t dividend, uint32_t divisor) ;
 		void initClockNVIC( void ) ;
+
+		void waitSyncWIRE( void ) ;
+
+		// timeout detection and tx restart for I2C operations
+		void initTimeout( void );
+		bool testTimeout( void );
+		uint16_t timeoutInterval;
+		uint32_t timeoutRef, restartTX_cnt, restartTX_limit = 5;
+		bool timeoutOccurred;
 };
 
 #endif
