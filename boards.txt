@@ -21,6 +21,44 @@ menu.maxqspi=Max QSPI
 menu.usbstack=USB Stack
 menu.debug=Debug
 
+# S2J LPWD M0 (SAMD21)
+# ------------------------------
+S2J_LPWD_m0.name=S2J LPWD M0
+S2J_LPWD_m0.vid.0=0x239A
+S2J_LPWD_m0.pid.0=0x800B
+S2J_LPWD_m0.vid.1=0x239A
+S2J_LPWD_m0.pid.1=0x000B
+S2J_LPWD_m0.vid.2=0x239A
+S2J_LPWD_m0.pid.2=0x0015
+S2J_LPWD_m0.upload.tool=bossac
+S2J_LPWD_m0.upload.protocol=sam-ba
+S2J_LPWD_m0.upload.maximum_size=262144
+S2J_LPWD_m0.upload.offset=0x2000
+S2J_LPWD_m0.upload.use_1200bps_touch=true
+S2J_LPWD_m0.upload.wait_for_upload_port=true
+S2J_LPWD_m0.upload.native_usb=true
+S2J_LPWD_m0.build.mcu=cortex-m0plus
+S2J_LPWD_m0.build.f_cpu=48000000L
+S2J_LPWD_m0.build.usb_product="S2J LPWD M0"
+S2J_LPWD_m0.build.usb_manufacturer="S2J"
+S2J_LPWD_m0.build.board=SAMD_ZERO
+S2J_LPWD_m0.build.core=arduino
+S2J_LPWD_m0.build.extra_flags=-DARDUINO_SAMD_ZERO -DARM_MATH_CM0PLUS -DS2J_LPWD_M0 -D__SAMD21G18A__ {build.usb_flags}
+S2J_LPWD_m0.build.ldscript=linker_scripts/gcc/flash_with_bootloader.ld
+S2J_LPWD_m0.build.openocdscript=openocd_scripts/S2J_LPWD_m0.cfg
+S2J_LPWD_m0.build.variant=S2J_LPWD_m0
+S2J_LPWD_m0.build.variant_system_lib=
+S2J_LPWD_m0.build.vid=0x239A
+S2J_LPWD_m0.build.pid=0x800B
+S2J_LPWD_m0.bootloader.tool=openocd
+S2J_LPWD_m0.bootloader.file=featherM0/bootloader-feather_m0-v2.0.0-adafruit.5.bin
+S2J_LPWD_m0.menu.usbstack.arduino=Arduino
+S2J_LPWD_m0.menu.usbstack.tinyusb=TinyUSB
+S2J_LPWD_m0.menu.usbstack.tinyusb.build.flags.usbstack=-DUSE_TINYUSB
+S2J_LPWD_m0.menu.debug.off=Off
+S2J_LPWD_m0.menu.debug.on=On
+S2J_LPWD_m0.menu.debug.on.build.flags.debug=-g
+
 # Adafruit Feather M0 (SAMD21)
 # ------------------------------
 adafruit_feather_m0.name=Adafruit Feather M0
