@@ -77,13 +77,13 @@ extern "C"
 // #define digitalPinToTimer(P)
 
 // LEDs
-#define PIN_LED_13           (13u)
-#define PIN_LED_RXL          (25u)
-#define PIN_LED_TXL          (26u)
-#define PIN_LED              PIN_LED_13
-#define PIN_LED2             PIN_LED_RXL
-#define PIN_LED3             PIN_LED_TXL
-#define LED_BUILTIN          PIN_LED_13
+//#define PIN_LED_13           (13u)
+//#define PIN_LED_RXL          (25u)
+//#define PIN_LED_TXL          (26u)
+//#define PIN_LED              PIN_LED_13
+//#define PIN_LED2             PIN_LED_RXL
+//#define PIN_LED3             PIN_LED_TXL
+//#define LED_BUILTIN          PIN_LED_13
 
 /*
  * Analog pins
@@ -134,6 +134,12 @@ static const uint8_t ATN = PIN_ATN;
 #define PIN_SERIAL4_TX       (47ul)
 #define PAD_SERIAL4_TX       (UART_TX_PAD_2)
 #define PAD_SERIAL4_RX       (SERCOM_RX_PAD_3)
+
+// Serial5 (EDBG)
+#define PIN_SERIAL5_RX       (31ul)
+#define PIN_SERIAL5_TX       (30ul)
+#define PAD_SERIAL5_TX       (UART_TX_PAD_2)
+#define PAD_SERIAL5_RX       (SERCOM_RX_PAD_3)
 
 /*
  * SPI Interfaces

@@ -68,6 +68,10 @@ void TwoWire::end() {
   sercom->disableWIRE();
 }
 
+bool TwoWire::isEnabled(){
+    return sercom->availableWIRE();
+}
+
 uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity, bool stopBit)
 {
   if(quantity == 0)
@@ -76,7 +80,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity, bool stopBit)
   }
 
   size_t byteRead = 0;
-  bool busOwner;
+  bool busOwner = false;
 
   rxBuffer.clear();
 
@@ -145,7 +149,7 @@ void TwoWire::beginTransmission(uint8_t address) {
 uint8_t TwoWire::endTransmission(bool stopBit)
 {
   uint8_t errCode = 0;
-  bool busOwner;
+  bool busOwner = false;
 
   transmissionBegun = false ;
 

@@ -191,6 +191,8 @@ public:
 	long toInt(void) const;
 	float toFloat(void) const;
 	double toDouble(void) const;
+    
+    static String format(const char* format, ...);
 
 protected:
 	char *buffer;	        // the actual char array
