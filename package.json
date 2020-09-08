@@ -1,0 +1,7 @@
+{
+    "name": "framework-arduino-samd-s2j",
+    "description": "Arduino Wiring-based Framework (S2J SAMD Core)",
+    "url": "https://github.com/steves2j/ArduinoCore-samd",
+    "branch": "S2J_LPWDM0"
+    "version": "1.5.14"
+}
