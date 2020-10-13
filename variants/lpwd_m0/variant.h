@@ -118,10 +118,10 @@ static const uint8_t ATN = PIN_ATN;
  * Serial interfaces
  */
 // Serial (EDBG)
-#define PIN_SERIAL_RX       (31ul)
-#define PIN_SERIAL_TX       (30ul)
-#define PAD_SERIAL_TX       (UART_TX_PAD_2)
-#define PAD_SERIAL_RX       (SERCOM_RX_PAD_3)
+//#define PIN_SERIAL_RX       (31ul)
+//#define PIN_SERIAL_TX       (30ul)
+//#define PAD_SERIAL_TX       (UART_TX_PAD_2)
+//#define PAD_SERIAL_RX       (SERCOM_RX_PAD_3)
 
 // Serial1
 #define PIN_SERIAL1_RX       (0ul)
@@ -168,8 +168,16 @@ static const uint8_t SCK  = PIN_SPI_SCK ;
 #define PERIPH_WIRE          sercom3
 #define WIRE_IT_HANDLER      SERCOM3_Handler
 
+#define PIN_WIRE1_SDA         (48u)
+#define PIN_WIRE1_SCL         (49u)
+#define PERIPH_WIRE1          sercom1
+#define WIRE1_IT_HANDLER      SERCOM1_Handler
+
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
+
+static const uint8_t SDA1 = PIN_WIRE1_SDA;
+static const uint8_t SCL1 = PIN_WIRE1_SCL;
 
 /*
  * USB
