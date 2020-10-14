@@ -167,6 +167,7 @@ public:
 	const char* end() const { return c_str() + length(); }
 
 	// search
+	int count(const String &s) const;
 	int indexOf( char ch ) const;
 	int indexOf( char ch, unsigned int fromIndex ) const;
 	int indexOf( const String &str ) const;

@@ -632,6 +632,18 @@ String String::substring(unsigned int left, unsigned int right) const
 	return out;
 }
 
+int String::count(const String &s) const
+{
+	int lsidx=indexOf(s);
+	int cnt=0;
+	while(lsidx!=-1 && cnt<32766){
+		cnt++;
+		lsidx+=s.length();
+		lsidx=indexOf(s,lsidx);
+	}
+	return cnt;
+}
+
 /*********************************************/
 /*  Modification                             */
 /*********************************************/
