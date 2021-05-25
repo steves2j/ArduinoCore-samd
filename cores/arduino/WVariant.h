@@ -206,6 +206,7 @@ typedef enum _ETCChannel
   TCC2_CH3 = (2<<8)|(1), // Channel 3 is 1!
   TC3_CH0  = (3<<8)|(0),
   TC3_CH1  = (3<<8)|(1),
+  //TC3_CH2  = (3<<8)|(2),
   TC4_CH0  = (4<<8)|(0),
   TC4_CH1  = (4<<8)|(1),
   TC5_CH0  = (5<<8)|(0),

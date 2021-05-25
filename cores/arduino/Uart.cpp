@@ -167,7 +167,9 @@ size_t Uart::write(const uint8_t data)
       if (interruptsEnabled) {
         uint32_t exceptionNumber = (SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk);
 
-        if (exceptionNumber == 0 ||
+        if (sercom->isDataRegisterEmptyUART()) {
+          IrqHandler();
+        } else if (exceptionNumber == 0 ||
               NVIC_GetPriority((IRQn_Type)(exceptionNumber - 16)) > SERCOM_NVIC_PRIORITY) {
           // no exception or called from an ISR with lower priority,
           // wait for free buffer spot via IRQ
