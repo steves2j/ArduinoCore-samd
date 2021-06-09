@@ -157,39 +157,41 @@ int Uart::read()
 
 size_t Uart::write(const uint8_t data)
 {
-  if (sercom->isDataRegisterEmptyUART() && txBuffer.available() == 0) {
-    sercom->writeDataUART(data);
-  } else {
-    // spin lock until a spot opens up in the buffer
-    while(txBuffer.isFull()) {
-      uint8_t interruptsEnabled = ((__get_PRIMASK() & 0x1) == 0);
+  if (sercom->isEnabled()) {
+    if (sercom->isDataRegisterEmptyUART() && txBuffer.available() == 0) {
+      sercom->writeDataUART(data);
+    } else {
+      // spin lock until a spot opens up in the buffer
+      while(txBuffer.isFull()) {
+        uint8_t interruptsEnabled = ((__get_PRIMASK() & 0x1) == 0);
 
-      if (interruptsEnabled) {
-        uint32_t exceptionNumber = (SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk);
+        if (interruptsEnabled) {
+          uint32_t exceptionNumber = (SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk);
 
+          if (sercom->isDataRegisterEmptyUART()) {
+            IrqHandler();
+          } else if (exceptionNumber == 0 ||
+                NVIC_GetPriority((IRQn_Type)(exceptionNumber - 16)) > SERCOM_NVIC_PRIORITY) {
+            // no exception or called from an ISR with lower priority,
+            // wait for free buffer spot via IRQ
+            continue;
+          }
+        }
+
+        // interrupts are disabled or called from ISR with higher or equal priority than the SERCOM IRQ
+        // manually call the UART IRQ handler when the data register is empty
         if (sercom->isDataRegisterEmptyUART()) {
           IrqHandler();
-        } else if (exceptionNumber == 0 ||
-              NVIC_GetPriority((IRQn_Type)(exceptionNumber - 16)) > SERCOM_NVIC_PRIORITY) {
-          // no exception or called from an ISR with lower priority,
-          // wait for free buffer spot via IRQ
-          continue;
         }
       }
 
-      // interrupts are disabled or called from ISR with higher or equal priority than the SERCOM IRQ
-      // manually call the UART IRQ handler when the data register is empty
-      if (sercom->isDataRegisterEmptyUART()) {
-        IrqHandler();
-      }
+      txBuffer.store_char(data);
+
+      sercom->enableDataRegisterEmptyInterruptUART();
     }
 
-    txBuffer.store_char(data);
-
-    sercom->enableDataRegisterEmptyInterruptUART();
-  }
-
-  return 1;
+    return 1;
+  } else return 0;
 }
 
 SercomNumberStopBit Uart::extractNbStopBit(uint16_t config)

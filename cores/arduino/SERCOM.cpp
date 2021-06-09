@@ -202,14 +202,20 @@ uint8_t SERCOM::readDataUART()
   return sercom->USART.DATA.bit.DATA;
 }
 
+bool SERCOM::isEnabled(){
+  return sercom->USART.CTRLA.bit.ENABLE;
+}
+
 int SERCOM::writeDataUART(uint8_t data)
 {
-  // Wait for data register to be empty
-  while(!isDataRegisterEmptyUART());
+  if (sercom->USART.CTRLA.bit.ENABLE) {
+    // Wait for data register to be empty
+    while(!isDataRegisterEmptyUART());
 
-  //Put data into DATA register
-  sercom->USART.DATA.reg = (uint16_t)data;
-  return 1;
+    //Put data into DATA register
+    sercom->USART.DATA.reg = (uint16_t)data;
+    return 1;
+  } else return 0;
 }
 
 void SERCOM::enableDataRegisterEmptyInterruptUART()
